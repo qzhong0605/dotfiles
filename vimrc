@@ -1,17 +1,45 @@
 " basic configuration
 set encoding=utf-8
-
 set nu
 set ignorecase
 set hlsearch
 set incsearch
 set cursorline
 set ruler
-
-" save the default vim
-source $VIMRUNTIME/vimrc_example.vim
 set nobackup
 set noundofile 
+set nocompatible
+
+" Only do this part when compiled with support for autocommands
+if has("autocmd")
+  augroup vimStartup
+    autocmd!
+    " When editing a file, always jump to the last cursor position
+    autocmd BufReadPost *
+      \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+      \ |   exe "normal! g`\""
+      \ | endif
+  augroup END
+endif
+
+" Put these in an autocmd group, so that we can delete
+" them easily.
+augroup vimrcEx
+  au!
+
+  " For all text files set 'textwidth' to 78 characters.
+  autocmd FileType text setlocal textwidth=78
+augroup END
+
+" Add optional packages.
+"
+" The matchit plugin makes the % command work better, but it is not backwards
+" compatible.
+" The ! means the package won't be loaded right away but when plugins are
+" loaded during initialization.
+if has('syntax') && has('eval')
+  packadd! matchit
+endif
 
 " setup popup menu color
 highlight Pmenu ctermbg=black ctermfg=white
