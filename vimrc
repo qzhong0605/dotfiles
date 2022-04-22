@@ -10,6 +10,12 @@ set nobackup
 set noundofile 
 set nocompatible
 
+set tabstop=4
+" when indenting with '>', use 4 spaces width
+set shiftwidth=4
+" " On pressing tab, insert 4 spaces
+set expandtab
+
 " Only do this part when compiled with support for autocommands
 if has("autocmd")
   augroup vimStartup
@@ -211,3 +217,6 @@ command! -bang -nargs=? -complete=dir Files
 " fzf commands
 nnoremap <C-j>b :Buffers<CR>
 nnoremap <C-j>l :BLines<CR>
+
+" show key match count
+set shortmess-=S
